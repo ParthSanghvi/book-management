@@ -174,19 +174,19 @@ class Books_Management {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_action('wp_ajax_nopriv_book_filter', $plugin_public, 'handle_book_ajax_requests');
+		$this->loader->add_action('wp_ajax_nopriv_book_filter', $plugin_public, 'bm_handle_book_ajax_requests');
 		$this->loader->add_action('wp_ajax_book_filter', $plugin_public,
-			'handle_book_ajax_requests'
+			'bm_handle_book_ajax_requests'
 		);
 
-		$this->loader->add_action('wp_ajax_nopriv_book_search', $plugin_public, 'handle_book_search_ajax_request');
+		$this->loader->add_action('wp_ajax_nopriv_book_search', $plugin_public, 'bm_handle_book_search_ajax_request');
 		$this->loader->add_action('wp_ajax_book_search', $plugin_public,
-			'handle_book_search_ajax_request'
+			'bm_handle_book_search_ajax_request'
 		);
 
-		$this->loader->add_action('wp_ajax_nopriv_load_more_books', $plugin_public, 'load_more_books');
+		$this->loader->add_action('wp_ajax_nopriv_load_more_books', $plugin_public, 'bm_load_more_books');
 		$this->loader->add_action('wp_ajax_load_more_books', $plugin_public,
-			'load_more_books'
+			'bm_load_more_books'
 		);
 
 
@@ -236,7 +236,7 @@ class Books_Management {
 /**
  * Register the custom post type named Book.
  */
-public function register_custom_post_type() {
+public function bm_register_custom_post_type() {
 	$labels = array(
 		'name'               => __( 'Books', 'books-management' ),
 		'singular_name'      => __( 'Book', 'books-management' ),
@@ -274,7 +274,7 @@ public function register_custom_post_type() {
 /**
  * Register custom taxonomies named Authors and Publication for Book Post Type.
  */
-public function register_custom_taxonomies() {
+public function bm_register_custom_taxonomies() {
 	register_taxonomy(
 		'author',
 		'book',
@@ -305,7 +305,7 @@ public function register_custom_taxonomies() {
 /**
  * Shortcode for grid layout of books.
  */
-public function book_grid_shortcode( $atts ) {
+public function bm_book_grid_shortcode( $atts ) {
 	ob_start();
 	?>
 	<h1><?php echo esc_html__( 'Library', 'books-management' ); ?></h1>
@@ -422,7 +422,7 @@ public function book_grid_shortcode( $atts ) {
 /*
 	Function to hide page title if shortcode is added to the page.
 */
-	public function hide_page_title_for_shortcode_pages($title) {
+	public function bm_hide_page_title_for_shortcode_pages($title) {
 		global $post;
 
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'book_grid')) {
@@ -433,10 +433,10 @@ public function book_grid_shortcode( $atts ) {
 	}
 
 	public function register_hooks(){
-		add_action('init',array($this,'register_custom_post_type'));
-		add_action('init',array($this,'register_custom_taxonomies'));
-		add_shortcode( 'book_grid', array( $this, 'book_grid_shortcode' ) );
-		add_filter('the_title', array($this,'hide_page_title_for_shortcode_pages'));
+		add_action('init',array($this,'bm_register_custom_post_type'));
+		add_action('init',array($this,'bm_register_custom_taxonomies'));
+		add_shortcode( 'book_grid', array( $this, 'bm_book_grid_shortcode' ) );
+		add_filter('the_title', array($this,'bm_hide_page_title_for_shortcode_pages'));
 	}
 }
 
