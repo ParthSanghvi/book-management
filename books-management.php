@@ -63,7 +63,7 @@ function deactivate_books_management() {
 /*
     Create a page with Book Library on plugin activation and add shortcode into the post content.
 */
-function create_plugin_page_and_add_shortcode() {
+function bm_create_plugin_page_and_add_shortcode() {
     $page_id = wp_insert_post( array(
         'post_title'    => 'Book Library',
         'post_content'  => '[book_grid]',
@@ -79,7 +79,7 @@ function create_plugin_page_and_add_shortcode() {
 /*
     Delete page with Book Libbbrary on plugin deactivation.
 */
-function delete_plugin_page_and_shortcode() {
+function bm_delete_plugin_page_and_shortcode() {
     $page_id = get_option( 'plugin_page_id' );
 
     if ( $page_id ) {
@@ -90,8 +90,8 @@ function delete_plugin_page_and_shortcode() {
 
 register_activation_hook( __FILE__, 'activate_books_management' );
 register_deactivation_hook( __FILE__, 'deactivate_books_management' );
-register_activation_hook( __FILE__, 'create_plugin_page_and_add_shortcode' );
-register_deactivation_hook( __FILE__, 'delete_plugin_page_and_shortcode' );
+register_activation_hook( __FILE__, 'bm_create_plugin_page_and_add_shortcode' );
+register_deactivation_hook( __FILE__, 'bm_delete_plugin_page_and_shortcode' );
 
 
 /**
