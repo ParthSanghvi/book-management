@@ -106,7 +106,7 @@ class Books_Management_Public {
 	/*
 		Callback function for ajax book filter.
 	*/
-	function handle_book_ajax_requests() {
+	function bm_handle_book_ajax_requests() {
 
 	    if ( ! isset( $_POST['book_filter_nonce_field'] ) || ! wp_verify_nonce( $_POST['book_filter_nonce_field'], 'book_filter_nonce' ) ) {
 	        wp_die( 'Nonce verification failed.', 'book_filter_nonce_verification_failed', array( 'response' => 403 ) );
@@ -216,7 +216,7 @@ class Books_Management_Public {
 	    wp_die();
 }
 
-function handle_book_search_ajax_request() {
+function bm_handle_book_search_ajax_request() {
 
     if ( ! isset( $_POST['book_filter_nonce_field'] ) || ! wp_verify_nonce( $_POST['book_filter_nonce_field'], 'book_filter_nonce' ) ) {
         wp_send_json_error( 'Nonce verification failed.', 403 );
@@ -296,7 +296,7 @@ function handle_book_search_ajax_request() {
 /*
 	Ajax call back function to load more books.
 */
-function load_more_books() {
+function bm_load_more_books() {
 
     $page = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $offset = ($page - 1) * 10;
